@@ -1,5 +1,6 @@
 const MockApi = (() => {
   const STORAGE_KEY = 'kanban-mock-tasks';
+  const SIMULATE_ERROR = false;
   const LATENCY_MS = 50;
 
   const INITIAL_TASKS = [
@@ -31,9 +32,7 @@ const MockApi = (() => {
   }
 
   function simulateFailure() {
-    const params = new URLSearchParams(location.search);
-    if (params.get('mock') === 'offline') throw new TypeError('Failed to fetch');
-    if (params.get('mock') === 'error500') return jsonResponse({ error: 'Simulated server error' }, 500);
+    if (SIMULATE_ERROR) return jsonResponse({ error: 'Simulated server error' }, 500);
     return null;
   }
 
